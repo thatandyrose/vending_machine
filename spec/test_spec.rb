@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'test'
 
 describe '#test' do
   it 'should correctly process the data file' do
-    expect(Hello.new.say).to eq 'Hello'  
+    test = build :hello
+    expect(test.name).to eq 'john'
   end
 end
