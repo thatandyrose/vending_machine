@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe '#new' do
-  scenario "when I create the machine with a configuration" do
+  context "when I create the machine with a configuration" do
     let!(:config) do
       {
         coins_capacity: 100,

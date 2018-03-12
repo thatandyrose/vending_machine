@@ -1,5 +1,6 @@
-require 'test'
+require 'vending_machine'
 require 'factory_bot'
+require 'pry'
 
 RSpec.configure do |config|
   config.color = true

@@ -1,22 +1,22 @@
 require 'spec_helper'
 
 describe "adding products" do
-  let!(:vending_machine){ VendingMachine.new coins_capacity: 100, products_capacity: 2 }
+  let!(:vending_machine){ build :vending_machine, products_capacity: 2 }
   context 'when the machine is empty' do
     
     context "and I add products within capacity" do
       before do
-        vending_machine.add_products [Product.new(sku: 1, name: 'coke'), Product.new(sku: 2, name: 'coke')]
+        vending_machine.add_products build_list(:product, 2)
       end
 
       it 'should add products' do
-        expect(vending_machine.products).to eq [Product.new(sku: 1, name: 'coke'), Product.new(sku: 2, name: 'coke')]
+        expect(vending_machine.products.count).to eq 2
       end
     end
 
     context "and I add products over capacity" do
       it 'should not add products' do
-        expect{ vending_machine.add_products [Product.new(sku: 1, name: 'coke'), Product.new(sku: 2, name: 'coke'), Product.new(sku: 3, name: 'crisps')] }.to raise_error
+        expect{ vending_machine.add_products build_list(:product, 3) }.to raise_error(Errors::OverCapacityError)
         expect(vending_machine.products.count).to eq 0
       end
     end
@@ -25,22 +25,22 @@ describe "adding products" do
 
   context 'when the machine has some products already' do
     before do
-      vending_machine.add_products [Product.new(sku: 1, name: 'coke')]
+      vending_machine.add_products [build(:product)]
     end
     
     context "and I add products within capacity" do
       before do
-        vending_machine.add_products [Product.new(sku: 2, name: 'coke')]
+        vending_machine.add_products [build(:product)]
       end
 
       it 'should add products' do
-        expect(vending_machine.products).to eq [Product.new(sku: 1, name: 'coke'), Product.new(sku: 2, name: 'coke')]
+        expect(vending_machine.products.count).to eq 2
       end
     end
 
     context "and I add products over capacity" do
       it 'should not add products' do
-        expect{ vending_machine.add_products [Product.new(sku: 2, name: 'coke'), Product.new(sku: 3, name: 'crisps')] }.to raise_error
+        expect{ vending_machine.add_products build_list(:product, 2) }.to raise_error(Errors::OverCapacityError)
         expect(vending_machine.products.count).to eq 1
       end
     end
