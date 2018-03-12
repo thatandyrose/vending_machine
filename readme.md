@@ -2,6 +2,8 @@
 
 1. Clone repo
 2. `$ cd vending_machine`
+3. `$ bundle install`
+4. `$ rspec`
 3. `$ irb`
 4. `$ require_relative 'lib/vending_machine'`
 5. Checkout `spec/vending_machine` for usage examples!
