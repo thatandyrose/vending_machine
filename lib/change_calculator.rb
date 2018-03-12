@@ -1,5 +1,3 @@
-require 'coins/cash_machine'
-
 class ChangeCalculator
   attr_reader :change
 

@@ -1,7 +1,3 @@
-require 'change_calculator'
-require 'money'
-I18n.enforce_available_locales = false
-
 class PurchaseResponse
   attr_reader :transaction_status, :change, :amount_required_in_pence, :amount_paid_in_pence
 

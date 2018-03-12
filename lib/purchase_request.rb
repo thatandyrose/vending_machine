@@ -1,5 +1,3 @@
-require 'coins/cash_machine'
-
 class PurchaseRequest
   attr_reader :product, :coins
 

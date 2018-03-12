@@ -1,11 +1,15 @@
-require 'errors/over_capacity_error'
-require 'errors/no_product_error'
-require 'errors/purchase_not_in_process_error'
-require 'coins/coin'
-require 'product'
-require 'purchase_response'
-require 'purchase_request'
+require_relative 'errors/over_capacity_error'
+require_relative 'errors/no_product_error'
+require_relative 'errors/purchase_not_in_process_error'
+require_relative 'coins/coin'
+require_relative 'product'
+require_relative 'purchase_response'
+require_relative 'purchase_request'
+require_relative 'coins/cash_machine'
+require_relative 'change_calculator'
+require 'money'
 
+I18n.enforce_available_locales = false
 include Coins
 
 class VendingMachine
