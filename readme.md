@@ -8,6 +8,6 @@
 
 # Thoughts?
 
-Not entirely happy with this implementation, but considering there are test and this is a first draft, I'm pretty happy that I can iterate having the tests there.
+Not entirely happy with this implementation, but considering there are tests and this is a first draft, I'm pretty happy that I can iterate having the tests there.
 
-In terms of the tests themselves, they don't provide full coverage, but they're main purpose was to help me think about the API for the class and keep the surface of the API as small as possible.
+In terms of the tests themselves, they don't provide full coverage, but their main purpose was to help me think about the API for the class and keep the surface of the API as small as possible.
