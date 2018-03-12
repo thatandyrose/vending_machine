@@ -4,6 +4,11 @@ describe "continuing purchases" do
   let!(:vending_machine){ build :vending_machine }
   let!(:product){ build :product, price_in_pence: 260 }
 
+  before do
+    vending_machine.add_products [product]
+  end
+  
+
   context "when I have started a purchase with not enough money" do
     let(:response){
       vending_machine.continue_purchase do |purchase_request|
@@ -19,7 +24,7 @@ describe "continuing purchases" do
 
     it 'should append the new payment to what I had already paid' do
       expect(response.amount_required_in_pence).to eq 50
-      expect(response.paid_in_pence).to eq 210
+      expect(response.amount_paid_in_pence).to eq 210
     end
 
   end
@@ -33,12 +38,12 @@ describe "continuing purchases" do
 
     before do
       vending_machine.start_purchase product.sku do |purchase_request|
-        purchase_request.pay [TwoPounds.new, FifityPence.new]
+        purchase_request.pay [TwoPounds.new, FifityPence.new, TenPence.new]
       end
     end
 
     it 'should not allow me to call continue_purchase' do
-      expect{ response }.to raise_error
+      expect{ response }.to raise_error(Errors::PurchaseNotInProcessError)
     end
 
   end
@@ -57,7 +62,7 @@ describe "continuing purchases" do
     end
 
     it 'should not allow me to call continue_purchase' do
-      expect{ response }.to raise_error
+      expect{ response }.to raise_error(Errors::PurchaseNotInProcessError)
     end
 
   end

@@ -1,5 +1,6 @@
 require 'errors/over_capacity_error'
 require 'errors/no_product_error'
+require 'errors/purchase_not_in_process_error'
 require 'coins/coin'
 require 'product'
 require 'purchase_response'
@@ -48,11 +49,14 @@ class VendingMachine
 
     block.call @purchase_request
     
-    response = PurchaseResponse.new(@purchase_request, self)
+    process_purchase_request
+  end
 
-    process_purchase_response(response)
-    
-    response
+  def continue_purchase(&block)
+    raise Errors::PurchaseNotInProcessError if !@purchase_request
+    block.call @purchase_request
+
+    process_purchase_request
   end
 
   def cash_amount_in_pence
@@ -61,7 +65,8 @@ class VendingMachine
 
   private
 
-  def process_purchase_response(purchase_response)
+  def process_purchase_request
+    purchase_response = PurchaseResponse.new(@purchase_request, self)
     
     case purchase_response.transaction_status
     when :successful
@@ -76,6 +81,8 @@ class VendingMachine
     when :not_enough_change_in_machine
       @purchase_request = nil
     end
+
+    purchase_response
   end
 
   def are_coins_above_capacity?(additional_coins_count = 0)

@@ -3,13 +3,14 @@ require 'money'
 I18n.enforce_available_locales = false
 
 class PurchaseResponse
-  attr_reader :transaction_status, :change, :amount_required_in_pence
+  attr_reader :transaction_status, :change, :amount_required_in_pence, :amount_paid_in_pence
 
   def initialize(purchase_request, vending_machine)
     @purchase_request = purchase_request
     @vending_machine = vending_machine
     @change = []
-    @amount_required_in_pence = purchase_request.amount_required_in_pence
+    @amount_required_in_pence = purchase_request.amount_required_in_pence#
+    @amount_paid_in_pence = purchase_request.amount_paid_in_pence
     
     build_status
   end
